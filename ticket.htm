@@ -51,10 +51,33 @@
                 background-color: #999999; 
                 border-radius: 4px;
             }
+            #loading-screen {
+                position: fixed;
+                inset: 0;
+                background-color: black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                transition: opacity 0.5s ease-out;
+            }
 
+            #loading-gif {
+                width: 100vw;
+                height: 100vh;
+                object-fit: contain;
+            }
+
+            .hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
         </style>
     </head>
     <body>
+        <div id="loading-screen">
+            <img id="loading-gif" src="img/animation.gif" alt="Loading...">
+        </div>
         <header class="max-w-[100vw] max-sm:px-[15px] sm:px-[30px] md:px-[50px] py-[30px]">
             <nav class=" w-full flex items-center max-sm:justify-center sm:justify-center md:justify-between ">    
                 <div class="flex items-center lg:space-x-[10vw] md:space-x-[5vw]">
@@ -258,6 +281,33 @@
         </footer>
 
         <script src="js/scriptTicket.js"></script>
-        
+         <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const loadingScreen = document.getElementById('loading-screen');
+                const gifDuration = 400; 
+
+                let pageFullyLoaded = false;
+                let minimumTimePassed = false;
+
+                function hideLoadingScreen() {
+                    if (pageFullyLoaded && minimumTimePassed) {
+                        loadingScreen.classList.add('opacity-0', 'pointer-events-none');
+                        setTimeout(() => {
+                            loadingScreen.remove(); 
+                        }, 500); 
+                    }
+                }
+
+                window.addEventListener('load', () => {
+                    pageFullyLoaded = true;
+                    hideLoadingScreen(); 
+                });
+
+                setTimeout(() => {
+                    minimumTimePassed = true;
+                    hideLoadingScreen(); 
+                }, gifDuration);
+            });
+        </script>
     </body>
 </html>

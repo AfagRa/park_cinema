@@ -43,12 +43,33 @@
             text-decoration: underline;
             color: #ffffff;
         }
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
 
+        #loading-gif {
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+            
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
-<body>
-    <div id="loading-screen" class="fixed inset-0 bg-white flex justify-center items-center z-[9999] transition-opacity duration-500 ease-out">
-        <img id="loading-gif" src="img/animation.gif" alt="gif" class="max-w-[80%] max-h-[80%] object-contain">
+<body>  
+    <div id="loading-screen">
+        <img id="loading-gif" src="img/animation.gif" alt="Loading...">
     </div>
 
     <header class="relative">
@@ -280,7 +301,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             const loadingScreen = document.getElementById('loading-screen');
-            const gifDuration = 3000; 
+            const gifDuration = 400; 
 
             let pageFullyLoaded = false;
             let minimumTimePassed = false;
